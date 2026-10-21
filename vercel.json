@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/scarica",
+      "destination": "https://github.com/serpicoproduction-del/LINKAMI-Download/releases/download/v1.0.0/LINKAMI_Windows_1.0.zip",
+      "permanent": false
+    }
+  ]
+}

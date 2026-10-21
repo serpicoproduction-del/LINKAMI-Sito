@@ -1,0 +1,33 @@
+LINKAMI 1.0 — LANDING PAGE CON DOWNLOAD DIRETTO
+Powered by Serpico Production
+
+COSA CAMBIA
+- Tutti i pulsanti "Scarica" avviano il download dello ZIP, senza aprire una pagina GitHub.
+- Nel sito pubblicato il pulsante usa /scarica: Vercel reindirizza direttamente al file della release.
+- GitHub conserva lo ZIP sul server, ma il visitatore non deve aprire la pagina della release.
+- Se apri index.html in locale sul computer, i pulsanti scaricano direttamente il file GitHub.
+
+ANTEPRIMA
+1. Estrai l'archivio.
+2. Apri index.html dal computer.
+3. Clicca su Scarica: dovrebbe iniziare il download, senza mostrare una pagina GitHub.
+
+PUBBLICAZIONE SU VERCEL
+1. Crea un repository separato per questa landing, senza mescolarlo al sito principale.
+2. Carica tutti i file e le cartelle, COMPRESO vercel.json nella stessa cartella di index.html.
+3. Importa il repository in un NUOVO progetto Vercel (sito statico).
+4. Prova sul dominio *.vercel.app che /scarica avvii subito il file ZIP.
+5. Configura linkami.serpicoproduction.it come dominio del NUOVO progetto.
+6. Non modificare i DNS di serpicoproduction.it necessari al sito principale.
+
+NOTA IMPORTANTE
+Il download è ospitato su GitHub. L'utente non visita l'interfaccia GitHub,
+ma il browser potrebbe indicare github.com come origine del file scaricato.
+Per mostrare soltanto il tuo dominio anche come origine del file, occorre
+ospitare il file direttamente su uno storage associato al tuo dominio.
+
+FILE PUBBLICATO
+LINKAMI_Windows_1.0.zip — release v1.0.0
+https://github.com/serpicoproduction-del/LINKAMI-Download/releases/tag/v1.0.0
+
+Non includere credenziali, password o altri progetti nel repository della landing.
