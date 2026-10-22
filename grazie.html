@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>LINKAMI — Conferma acquisto</title>
+<style>
+:root { color-scheme:dark; font-family:system-ui,-apple-system,Segoe UI,sans-serif; background:#070b10; color:#f5f7fb; }
+* { box-sizing:border-box; }
+body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; background:radial-gradient(circle at 50% 10%,#153642 0%,#070b10 55%); }
+main { width:min(100%,530px); padding:48px 34px; text-align:center; background:#111923; border:1px solid #24404a; border-radius:24px; box-shadow:0 25px 80px #0008; }
+img { width:100px; height:100px; object-fit:contain; }
+h1 { font-size:clamp(28px,5vw,38px); margin:20px 0 12px; }
+p { line-height:1.6; color:#c9d5da; }
+a.btn, button { display:inline-flex; justify-content:center; align-items:center; background:#3ed5c9; color:#061318; font:700 16px system-ui; border:0; border-radius:12px; padding:15px 22px; text-decoration:none; cursor:pointer; margin:12px 0; }
+a.secondary { color:#a9e5e0; }
+small { color:#88969c; display:block; margin-top:20px; }
+[hidden] { display:none!important; }
+</style>
+</head>
+<body>
+<main>
+<img src="/assets/logo-linkami.webp" alt="Logo LINKAMI">
+<h1>Il tuo LINKAMI</h1>
+<p id="status" role="status" aria-live="polite">Stiamo verificando il pagamento in modo sicuro…</p>
+<a class="btn" id="download" hidden href="#">Scarica LINKAMI per Windows ↓</a>
+<div><button type="button" id="retry" hidden>Controlla di nuovo</button></div>
+<p><a class="secondary" href="/">Torna alla pagina LINKAMI</a></p>
+<small>Powered by Serpico Production. Il download è disponibile dopo la conferma del pagamento.</small>
+</main>
+<script>
+(function () {
+  const id = new URLSearchParams(location.search).get('session_id');
+  const status = document.getElementById('status');
+  const download = document.getElementById('download');
+  const retry = document.getElementById('retry');
+  if (!id || !/^cs_(?:live|test)_[a-zA-Z0-9]+$/.test(id)) {
+    status.textContent = 'Nessun acquisto da verificare. Torna su LINKAMI per acquistare.';
+    return;
+  }
+  const url = '/api/download?session_id=' + encodeURIComponent(id);
+  download.href = url;
+  async function check() {
+    download.hidden = true;
+    retry.hidden = true;
+    status.textContent = 'Verifica del pagamento in corso…';
+    try {
+      const response = await fetch('/api/verify?session_id=' + encodeURIComponent(id), {cache:'no-store'});
+      const result = await response.json();
+      if (response.ok && result.paid === true) {
+        status.textContent = 'Pagamento confermato! Puoi scaricare LINKAMI 1.0 sul tuo PC.';
+        download.hidden = false;
+        return;
+      }
+      status.textContent = response.ok
+        ? 'Il pagamento non risulta ancora confermato. Se hai appena pagato, controlla di nuovo.'
+        : 'Verifica momentaneamente non disponibile. Riprova più tardi.';
+    } catch {
+      status.textContent = 'Impossibile collegarsi alla verifica. Riprova.';
+    }
+    retry.hidden = false;
+  }
+  retry.addEventListener('click',check);
+  check();
+})();
+</script>
+</body>
+</html>
