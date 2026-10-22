@@ -1,17 +1,15 @@
 /* LINKAMI — Powered by Serpico Production
-   I pulsanti Scarica avviano direttamente il download.
-   Sul sito pubblicato, l'indirizzo /scarica rimanda al file ZIP della release.
-   Con la pagina aperta dal computer (file://) il download funziona
-   anche prima della pubblicazione.
+   Il pulsante Scarica apre il pagamento Stripe, non il vecchio ZIP pubblico.
+   La consegna del file passa dalla verifica server-side del pagamento.
 */
-const LOCAL_PREVIEW_DOWNLOAD_URL = "https://github.com/serpicoproduction-del/LINKAMI-Download/releases/download/v1.0.0/LINKAMI_Windows_1.0.zip";
-
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
 const isLocalPreview = window.location.protocol === 'file:';
+const stripePaymentUrl = 'https://buy.stripe.com/5kQdR8fA4fHxgkufeU3oA00';
+
 document.querySelectorAll('[data-download]').forEach(link => {
-  link.setAttribute('href', isLocalPreview ? LOCAL_PREVIEW_DOWNLOAD_URL : '/scarica');
+  link.setAttribute('href', isLocalPreview ? stripePaymentUrl : '/scarica');
   link.removeAttribute('target');
-  link.setAttribute('aria-label', 'Scarica LINKAMI 1.0 per Windows');
+  link.setAttribute('aria-label', 'Acquista LINKAMI 1.0 per 2,99 euro con Stripe');
 });
