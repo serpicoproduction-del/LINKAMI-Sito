@@ -6,11 +6,5 @@
       "destination": "https://buy.stripe.com/5kQdR8fA4fHxgkufeU3oA00",
       "permanent": false
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/grazie",
-      "destination": "/grazie.html"
-    }
   ]
 }
